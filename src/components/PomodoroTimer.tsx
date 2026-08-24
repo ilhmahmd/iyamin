@@ -93,31 +93,33 @@ export function PomodoroTimer() {
 
  <div className="flex-1 flex flex-col items-center justify-center relative z-10">
  <div className="relative w-48 h-48 flex items-center justify-center">
- {/* Circular Progress */}
- <svg className="absolute w-full h-full transform -rotate-90">
- <circle
- cx="96"
- cy="96"
- r="88"
- className="stroke-white/10"
- strokeWidth="6"
- fill="none"
- />
- <motion.circle
- cx="96"
- cy="96"
- r="88"
- className={cn(
- 'transition-all duration-1000 ease-linear',
- mode === 'work' ? 'stroke-primary' : 'stroke-accent'
- )}
- strokeWidth="6"
- fill="none"
- strokeDasharray={2 * Math.PI * 88}
- strokeDashoffset={2 * Math.PI * 88 * (1 - progress / 100)}
- strokeLinecap="round"
- />
- </svg>
+        {/* Circular Progress */}
+        <svg className="absolute w-full h-full transform -rotate-90">
+          <circle
+            cx="96"
+            cy="96"
+            r="88"
+            className="stroke-white/10"
+            strokeWidth="6"
+            fill="none"
+          />
+          <circle
+            cx="96"
+            cy="96"
+            r="88"
+            className={cn(
+              mode === 'work' ? 'stroke-primary' : 'stroke-accent'
+            )}
+            style={{ 
+              transition: 'stroke-dashoffset 1s linear, stroke 0.5s ease',
+              strokeDasharray: 2 * Math.PI * 88,
+              strokeDashoffset: 2 * Math.PI * 88 * (1 - progress / 100)
+            }}
+            strokeWidth="6"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
  <div className="text-5xl font-bold tracking-tight">
  {formatTime(timeLeft)}
  </div>
