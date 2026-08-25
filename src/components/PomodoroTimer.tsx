@@ -8,9 +8,25 @@ const WORK_TIME = 25 * 60;
 const BREAK_TIME = 5 * 60;
 
 export function PomodoroTimer() {
- const [timeLeft, setTimeLeft] = useState(WORK_TIME);
- const [isRunning, setIsRunning] = useState(false);
- const [mode, setMode] = useState<Mode>('work');
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const saved = localStorage.getItem('pomodoro_timeLeft');
+    return saved !== null ? parseInt(saved, 10) : WORK_TIME;
+  });
+  const [isRunning, setIsRunning] = useState(() => {
+    const saved = localStorage.getItem('pomodoro_isRunning');
+    return saved === 'true';
+  });
+  const [mode, setMode] = useState<Mode>(() => {
+    const saved = localStorage.getItem('pomodoro_mode') as Mode;
+    return saved || 'work';
+  });
+
+  // Sync to local storage
+  useEffect(() => {
+    localStorage.setItem('pomodoro_timeLeft', timeLeft.toString());
+    localStorage.setItem('pomodoro_isRunning', isRunning.toString());
+    localStorage.setItem('pomodoro_mode', mode);
+  }, [timeLeft, isRunning, mode]);
 
  useEffect(() => {
  let interval: number | undefined;
