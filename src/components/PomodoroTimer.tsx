@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, Coffee, Briefcase } from 'lucide-react';
 import { cn } from '../lib/utils';
-import { motion } from 'framer-motion';
 
 type Mode = 'work' | 'break';
 
